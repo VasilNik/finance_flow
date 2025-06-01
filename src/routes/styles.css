@@ -4,38 +4,44 @@ body {
 }
 
 .navbar-custom {
-    background-color: #2A2E35;
+	background-color: #2A2E35 !important;
 }
 
-.navbar-brand {
-    font-weight: bold;
-    color: white;
+.navbar-custom .navbar-brand {
+	font-weight: bold;
+	color: white !important;
+	text-decoration: none;
 }
 
-.nav-link {
-    color: white;
-    transition: color 0.3s ease;
+.navbar-custom .navbar-brand:hover {
+	color: #6A7B8D !important;
 }
 
-.nav-link:hover,
-.navbar-brand:hover {
-    color: #6A7B8D;
+.navbar-custom .nav-link {
+	color: white !important;
+	transition: color 0.3s ease;
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.navbar-custom .nav-link:hover {
+	color: #6A7B8D !important;
+}
+
+.navbar-logo {
+	width: 50px;
+	height: 50px;
 }
 
 .container {
     padding-top: 10px;
 }
 
-.navbar-logo {
-    width: 50px;
-    height: 50px;
-}
-
 .btn-primary {
-    background-color: #2A2E35;
-    color: white;
+    background-color: #2A2E35 !important;
+    color: white !important;
     padding: 10px 20px;
-    border: none;
+    border: none !important;
     border-radius: 6px;
     font-size: 1rem;
     font-weight: 500;
@@ -48,11 +54,13 @@ body {
     transform: translateY(-1px);
 }
 
+.btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-    outline: none;
-    box-shadow: none;
-    background-color: #6A7B8D;
+	background-color: #6A7B8D !important;
+	color: white !important;
+	outline: none;
+	box-shadow: none;
 }
 
 .account-list {
