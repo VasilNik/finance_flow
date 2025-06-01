@@ -2,8 +2,9 @@
 	import AccountComponent from "$lib/components/AccountComponent.svelte";
 	import TransactionLineChart from "$lib/components/TransactionLineChart.svelte";
 	import BalanceChart from "$lib/components/BalanceChart.svelte";
-	let { data } = $props();
 	import { formatCurrency } from "$lib/utils/format.js";
+
+	let { data } = $props();
 
 	const totalBalance = data.accounts.reduce(
 		(sum, account) => sum + account.balance,

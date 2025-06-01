@@ -1,10 +1,12 @@
 <script>
-	let { data } = $props();
 	import TransactionComponent from "$lib/components/TransactionComponent.svelte";
 	import { formatCurrency } from "$lib/utils/format.js";
+
+	let { data } = $props();
 </script>
 
 <div class="page-container">
+	<a href="/accounts" class="btn-secondary">← Zurück zur Übersicht</a>
 	<section class="account-header">
 		<div class="account-info">
 			<div>
@@ -13,8 +15,9 @@
 					CHF {formatCurrency(data.account.balance)}
 				</p>
 			</div>
-			<a href="/transactions/create?accountId=${data.account._id}" class="btn btn-primary"
-				>+ Neue Transaktion</a
+			<a
+				href="/transactions/create?accountId=${data.account._id}"
+				class="btn btn-primary">+ Neue Transaktion</a
 			>
 		</div>
 
@@ -40,7 +43,7 @@
 	.page-container {
 		max-width: 1100px;
 		margin: 0 auto;
-		padding: 20px;
+		padding: 5px;
 	}
 
 	.account-header {
@@ -87,5 +90,40 @@
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
+	}
+
+	.btn-primary {
+		background-color: #2a2e35;
+		color: white;
+		padding: 10px 20px;
+		border: none;
+		border-radius: 6px;
+		font-weight: 500;
+		transition:
+			background-color 0.3s ease,
+			transform 0.2s ease;
+	}
+
+	.btn-primary:hover {
+		background-color: #6a7b8d;
+		transform: translateY(-1px);
+	}
+
+	.btn-primary:hover,
+	.btn-primary:focus,
+	.btn-primary:active {
+		background-color: #6a7b8d;
+		color: white;
+		outline: none;
+		box-shadow: none;
+	}
+
+	.btn-secondary {
+		display: inline-block;
+		margin-bottom: 12px;
+		color: #2a2e35;
+		text-decoration: none;
+		font-weight: 500;
+		padding-top: 15px;
 	}
 </style>

@@ -1,8 +1,8 @@
 <script>
-	import { formatCurrency } from '$lib/utils/format.js';
-	import dayjs from 'dayjs';
+	import { formatCurrency } from "$lib/utils/format.js";
+	import dayjs from "dayjs";
 
-	let { data } = $props(); // enthält: data.transaction, data.account
+	let { data } = $props();
 	const tx = data.transaction;
 </script>
 
@@ -13,10 +13,18 @@
 
 	<div class="transaction-details">
 		<p><strong>Beschreibung:</strong> {tx.description}</p>
-		<p><strong>Typ:</strong> {tx.type === 'income' ? 'Einnahme' : 'Ausgabe'}</p>
-		<p><strong>Betrag:</strong> {tx.type === 'expense' ? '-' : ''}CHF {formatCurrency(Math.abs(tx.amount))}</p>
-		<p><strong>Datum:</strong> {dayjs(tx.date).format('DD.MM.YYYY')}</p>
-		<!--<p><strong>Zugehöriges Konto:</strong> {data.account.name}</p>-->
+		<p>
+			<strong>Typ:</strong>
+			{tx.type === "income" ? "Einnahme" : "Ausgabe"}
+		</p>
+		<p>
+			<strong>Betrag:</strong>
+			{tx.type === "expense" ? "-" : ""}CHF {formatCurrency(
+				Math.abs(tx.amount),
+			)}
+		</p>
+		<p><strong>Datum:</strong> {dayjs(tx.date).format("DD.MM.YYYY")}</p>
+		<p><strong>Zugehöriges Konto:</strong> {data.account.name}</p>
 	</div>
 </div>
 
@@ -24,7 +32,7 @@
 	.page-container {
 		max-width: 600px;
 		margin: 0 auto;
-		padding: 24px 16px;
+		padding: 5px 16px;
 	}
 
 	.page-title {
@@ -52,5 +60,6 @@
 		color: #2a2e35;
 		text-decoration: none;
 		font-weight: 500;
+		padding-top: 15px;
 	}
 </style>

@@ -21,16 +21,13 @@
 				grouped[isoDate].expense += Math.abs(t.amount);
 		});
 
-		// Sortierte ISO-Daten
 		const sortedIsoDates = Object.keys(grouped).sort(
 			(a, b) => new Date(a) - new Date(b),
 		);
 
-		// Datenreihen
 		const incomeData = sortedIsoDates.map((d) => grouped[d].income);
 		const expenseData = sortedIsoDates.map((d) => grouped[d].expense);
 
-		// Labels mit dayjs im "de-CH"-Stil
 		const labels = sortedIsoDates.map((date) =>
 			dayjs(date).format("DD.MM.YYYY"),
 		);
@@ -39,7 +36,7 @@
 		new Chart(ctx, {
 			type: "line",
 			data: {
-				labels, // ← de-CH Labels!
+				labels,
 				datasets: [
 					{
 						label: "Einnahmen",

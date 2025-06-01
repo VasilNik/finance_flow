@@ -36,34 +36,3 @@ body {
 .container {
     padding-top: 10px;
 }
-
-.btn-primary {
-    background-color: #2A2E35 !important;
-    color: white !important;
-    padding: 10px 20px;
-    border: none !important;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.btn-primary:hover {
-    background-color: #6A7B8D;
-    transform: translateY(-1px);
-}
-
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active {
-	background-color: #6A7B8D !important;
-	color: white !important;
-	outline: none;
-	box-shadow: none;
-}
-
-.account-list {
-    gap: 10px;
-    padding-bottom: 20px;
-}

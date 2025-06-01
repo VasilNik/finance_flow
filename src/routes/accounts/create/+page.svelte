@@ -3,7 +3,7 @@
     let balance = $state();
 </script>
 
-<a href="/accounts" class="btn btn-secondary mb-3">Zurück</a>
+<a href="/accounts" class="btn-secondary">← Zurück zur Übersicht</a>
 
 <h1>Konto hinzufügen</h1>
 
@@ -14,7 +14,9 @@
     </div>
 
     <div class="mb-3">
-        <label for="balance" class="form-label">Kontostand (Maximal 2 Nachkommastellen)</label>
+        <label for="balance" class="form-label"
+            >Kontostand (Maximal 2 Nachkommastellen)</label
+        >
 
         <div class="input-wrapper">
             <span class="input-prefix">CHF</span>
@@ -59,5 +61,40 @@
         padding: 10px 12px;
         outline: none;
         font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #2a2e35;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        transition:
+            background-color 0.3s ease,
+            transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #6a7b8d;
+        transform: translateY(-1px);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-primary:active {
+        background-color: #6a7b8d;
+        color: white;
+        outline: none;
+        box-shadow: none;
+    }
+
+    .btn-secondary {
+        display: inline-block;
+        margin-bottom: 12px;
+        color: #2a2e35;
+        text-decoration: none;
+        font-weight: 500;
+        padding-top: 15px;
     }
 </style>

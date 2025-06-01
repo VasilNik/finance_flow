@@ -1,9 +1,9 @@
 <script>
-    import { page } from '$app/stores';
+    import { page } from "$app/stores";
 
-    let {data} = $props();
+    let { data } = $props();
     let accounts = data.accounts;
-    
+
     let amount = $state();
     let type = $state("income");
     let account = $state("");
@@ -11,22 +11,24 @@
     let date = $state("");
 
     $effect(() => {
-		if (type === "expense" && amount > 0) {
-			amount = -Math.abs(amount);
-		}
-		if (type === "income" && amount < 0) {
-			amount = Math.abs(amount);
-		}
-	});
+        if (type === "expense" && amount > 0) {
+            amount = -Math.abs(amount);
+        }
+        if (type === "income" && amount < 0) {
+            amount = Math.abs(amount);
+        }
+    });
 </script>
 
-<a href="/transactions" class="btn btn-secondary mb-3">Zurück</a>
+<a href="/transactions" class="btn-secondary">← Zurück zur Übersicht</a>
 
 <h1>Transaktion hinzufügen</h1>
 
 <form method="POST" action="?/createTransaction">
     <div class="mb-3">
-        <label for="amount" class="form-label">Betrag (Maximal 2 Nachkommastellen)</label>
+        <label for="amount" class="form-label"
+            >Betrag (Maximal 2 Nachkommastellen)</label
+        >
 
         <div class="input-wrapper">
             <span class="input-prefix">CHF</span>
@@ -51,7 +53,12 @@
 
     <div class="mb-3">
         <label for="account" class="form-label">Konto</label>
-        <select name="account" bind:value={account} required class="form-select">
+        <select
+            name="account"
+            bind:value={account}
+            required
+            class="form-select"
+        >
             <option value="" disabled selected>Konto auswählen</option>
             {#each accounts as acc}
                 <option value={acc._id}>{acc.name}</option>
@@ -61,12 +68,23 @@
 
     <div class="mb-3">
         <label for="description" class="form-label">Beschreibung</label>
-        <input name="description" bind:value={description} required class="form-control" />
+        <input
+            name="description"
+            bind:value={description}
+            required
+            class="form-control"
+        />
     </div>
 
     <div class="mb-3">
         <label for="date" class="form-label">Datum</label>
-        <input name="date" type="date" bind:value={date} required class="form-control" />
+        <input
+            name="date"
+            type="date"
+            bind:value={date}
+            required
+            class="form-control"
+        />
     </div>
 
     <button type="submit" name="createTransaction" class="btn btn-primary"
@@ -99,5 +117,40 @@
         padding: 10px 12px;
         outline: none;
         font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #2a2e35;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        transition:
+            background-color 0.3s ease,
+            transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #6a7b8d;
+        transform: translateY(-1px);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-primary:active {
+        background-color: #6a7b8d;
+        color: white;
+        outline: none;
+        box-shadow: none;
+    }
+
+    .btn-secondary {
+        display: inline-block;
+        margin-bottom: 12px;
+        color: #2a2e35;
+        text-decoration: none;
+        font-weight: 500;
+        padding-top: 15px;
     }
 </style>

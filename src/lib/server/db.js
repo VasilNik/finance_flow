@@ -2,66 +2,56 @@ import { MongoClient, ObjectId } from "mongodb"; // See https://www.mongodb.com/
 import { DB_URI } from "$env/static/private";
 import { get } from "svelte/store";
 
-console.log("URI", DB_URI)
 const client = new MongoClient(DB_URI);
 
 await client.connect();
-const db = client.db("FinanceFlow"); // select database
+const db = client.db("FinanceFlow");
 
 //////////////////////////////////////////
 // Accounts
 //////////////////////////////////////////
 
-// Get all accounts
 async function getAccounts() {
   let accounts = [];
   try {
     const collection = db.collection("accounts");
     const query = {};
 
-    // Get all objects that match the query
     accounts = await collection.find(query).toArray();
     accounts.forEach((account) => {
-      account._id = account._id.toString(); // convert ObjectId to String
+      account._id = account._id.toString();
     });
   } catch (error) {
-    console.log(error);
-    // TODO: errorhandling
+    console.error("Fehler beim laden der Accounts: ", error.message);
   }
   return accounts;
 }
 
-// Get account by id
 async function getAccount(id) {
   let account = null;
   try {
     const collection = db.collection("accounts");
-    const query = { _id: new ObjectId(id) }; // filter by id
-    console.log("Querying account with:", query);
+    const query = { _id: new ObjectId(id) };
     account = await collection.findOne(query);
 
     if (!account) {
-      console.log("No account with id " + id);
-      // TODO: errorhandling
+      console.error("Es exisiert kein Account mit der ID: ", id);
     } else {
-      account._id = account._id.toString(); // convert ObjectId to String
+      account._id = account._id.toString();
     }
   } catch (error) {
-    // TODO: errorhandling
-    console.log(error.message);
+    console.error("Fehler beim Laden des Accounts mit der ID: ", id, error.message);
   }
   return account;
 }
 
 async function createAccount(account) {
-  console.log("Creating account", account);
   try {
     const collection = db.collection("accounts");
     const result = await collection.insertOne(account);
-    return result.insertedId.toString(); // convert ObjectId to String
+    return result.insertedId.toString();
   } catch (error) {
-    // TODO: errorhandling
-    console.log(error.message);
+    console.error("Fehler beim Erstellen des Accounts: ", account, error.message);
   }
   return null;
 }
@@ -71,7 +61,7 @@ async function updateAccount(accountId, amount) {
     const account = await getAccount(accountId);
 
     if (!account) {
-      console.log("Account not found: " + accountId);
+      console.error("Es exisiert kein Account mit der ID: ", id);
       return;
     }
 
@@ -84,13 +74,13 @@ async function updateAccount(accountId, amount) {
     const result = await collection.updateOne(query, { $set: account });
 
     if (result.matchedCount === 0) {
-      console.log("No account with id " + id);
+      console.error("Es exisiert kein Account mit der ID: " + id);
     } else {
-      console.log("Account with id " + id + " has been updated.");
+      console.error("Account mit der ID " + id + " wurde aktualisiert.");
       return id;
     }
   } catch (error) {
-    console.error("Fehler beim Aktualisieren des Kontos:", error.message);
+    console.error("Fehler beim Aktualisieren des Kontos: ", error.message);
   }
 }
 
@@ -98,65 +88,55 @@ async function updateAccount(accountId, amount) {
 // Transactions
 //////////////////////////////////////////
 
-// Get all transactions
 async function getTransactions() {
   let transactions = [];
   try {
     const collection = db.collection("transactions");
     const query = {};
 
-    // Get all objects that match the query
-    transactions = (await collection.find(query).sort({ date: -1 }).toArray()); // sort by date descending
+    transactions = (await collection.find(query).sort({ date: -1 }).toArray());
     transactions.forEach((transaction) => {
-      transaction._id = transaction._id.toString(); // convert ObjectId to String
+      transaction._id = transaction._id.toString();
       transaction.accountId = transaction.accountId.toString();
     });
   } catch (error) {
-    console.log(error);
-    // TODO: errorhandling
+    console.error("Fehler beim Laden der Transaktionen: ", error.message);
   }
   return transactions;
 }
 
-// Get transactions by id
 async function getTransactionsByAccount(id) {
   let transactions = [];
   try {
     const collection = db.collection("transactions");
-    const query = { accountId: new ObjectId(id) }; // filter by id
+    const query = { accountId: new ObjectId(id) };
 
-    // Get all objects that match the query
-    transactions = (await collection.find(query).sort({ date: -1 }).toArray()); // sort by date descending
+    transactions = (await collection.find(query).sort({ date: -1 }).toArray());
     transactions.forEach((transaction) => {
-      transaction._id = transaction._id.toString(); // convert ObjectId to String
+      transaction._id = transaction._id.toString();
       transaction.accountId = transaction.accountId.toString();
     });
   } catch (error) {
-    console.log(error);
-    // TODO: errorhandling
+    console.error("Fehler beim Laden der Transaktion mit der Account ID: ", id, error.message);
   }
   return transactions;
 }
 
-// Get transaction by id
 async function getTransaction(id) {
   let transaction = null;
   try {
     const collection = db.collection("transactions");
-    const query = { _id: new ObjectId(id) }; // filter by id
-    console.log("Querying transaction with:", query);
+    const query = { _id: new ObjectId(id) };
     transaction = await collection.findOne(query);
-    transaction.accountId = transaction.accountId.toString(); // convert ObjectId to String
+    transaction.accountId = transaction.accountId.toString();
 
     if (!transaction) {
-      console.log("No transaction with id " + id);
-      // TODO: errorhandling
+      console.error("Es exisitiert keine Transaktion mit der ID: ", id);
     } else {
-      transaction._id = transaction._id.toString(); // convert ObjectId to String
+      transaction._id = transaction._id.toString();
     }
   } catch (error) {
-    // TODO: errorhandling
-    console.log(error.message);
+    console.error("Fehler beim Laden der Transaktion mit der ID :", id, error.message);
   }
   return transaction;
 }
@@ -166,16 +146,14 @@ async function createTransaction(transaction) {
     const collection = db.collection("transactions");
     transaction.accountId = new ObjectId(transaction.accountId);
     const result = await collection.insertOne(transaction);
-    updateAccount(transaction.accountId, transaction.amount); // update the account balance
-    return result.insertedId.toString(); // convert ObjectId to String
+    updateAccount(transaction.accountId, transaction.amount);
+    return result.insertedId.toString();
   } catch (error) {
-    // TODO: errorhandling
-    console.log(error.message);
+    console.error("Fehler beim Erstellen der Transaktion: ", transaction, error.message);
   }
   return null;
 }
 
-// export all functions so that they can be used in other files
 export default {
   getAccounts,
   getAccount,
